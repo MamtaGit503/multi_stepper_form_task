@@ -191,7 +191,7 @@ export default function DetailsPage() {
       <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-10">
         <button
           onClick={handleDownloadPDF}
-          className="bg-green-600 text-white flex items-center gap-2 w-full sm:w-auto px-6 sm:px-8 py-3 rounded-md hover:bg-green-700 text-sm sm:text-base"
+          className="bg-green-600 text-white flex items-center justify-center gap-2 w-full sm:w-auto px-6 sm:px-8 py-3 rounded-md hover:bg-green-700 text-sm sm:text-base"
         >
           Download PDF
           <MdOutlineFileDownload className="text-2xl" />
