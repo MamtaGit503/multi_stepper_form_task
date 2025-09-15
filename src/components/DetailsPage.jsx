@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import { MdOutlineFileDownload } from "react-icons/md";
+import { toast } from "react-toastify";
 
 export default function DetailsPage() {
   const location = useLocation();
@@ -22,61 +23,68 @@ export default function DetailsPage() {
   }
 
   const handleDownloadPDF = () => {
-    const doc = new jsPDF();
-    let y = 10;
+    try {
+      const doc = new jsPDF();
+      let y = 10;
 
-    doc.setFontSize(16);
-    doc.text("Travel Form Details", 105, y, { align: "center" });
-    y += 10;
+      doc.setFontSize(16);
+      doc.text("Travel Form Details", 105, y, { align: "center" });
+      y += 10;
 
-    const addSection = (title, fields) => {
-      y += 6;
-      doc.setFontSize(14);
-      doc.text(title, 10, y);
-      y += 6;
-      doc.setFontSize(11);
-      fields.forEach(([label, value]) => {
-        doc.text(`${label}: ${value || "-"}`, 12, y);
+      const addSection = (title, fields) => {
         y += 6;
-      });
-      y += 4;
-    };
+        doc.setFontSize(14);
+        doc.text(title, 10, y);
+        y += 6;
+        doc.setFontSize(11);
+        fields.forEach(([label, value]) => {
+          doc.text(`${label}: ${value || "-"}`, 12, y);
+          y += 6;
+        });
+        y += 4;
+      };
 
-    addSection("Personal Information", [
-      ["Full Name", data.fullName],
-      ["Email", data.email],
-      ["Phone", data.phone],
-      ["Date of Birth", data.dob],
-      ["Gender", data.gender],
-    ]);
+      addSection("Personal Information", [
+        ["Full Name", data.fullName],
+        ["Email", data.email],
+        ["Phone", data.phone],
+        ["Date of Birth", data.dob],
+        ["Gender", data.gender],
+      ]);
 
-    addSection("Trip Information", [
-      ["Departure Country", data.departureCountry],
-      ["Destination Country", data.destinationCountry],
-      ["Departure Date", data.departureDate],
-      ["Return Date", data.returnDate],
-      ["Number of Travelers", data.travelers],
-    ]);
+      addSection("Trip Information", [
+        ["Departure Country", data.departureCountry],
+        ["Destination Country", data.destinationCountry],
+        ["Departure Date", data.departureDate],
+        ["Return Date", data.returnDate],
+        ["Number of Travelers", data.travelers],
+      ]);
 
-    addSection("Coverage Options", [
-      ["Type of Coverage", data.coverageType],
-      ["Medical Coverage Amount", `${data.medicalAmount} ${data.currency}`],
-      ["Trip Cancellation Coverage", data.tripCancellation],
-      ["Baggage Coverage", data.baggageCoverage],
-      ["Emergency Evacuation Coverage", data.emergencyEvacuation],
-    ]);
+      addSection("Coverage Options", [
+        ["Type of Coverage", data.coverageType],
+        ["Medical Coverage Amount", `${data.medicalAmount} ${data.currency}`],
+        ["Trip Cancellation Coverage", data.tripCancellation],
+        ["Baggage Coverage", data.baggageCoverage],
+        ["Emergency Evacuation Coverage", data.emergencyEvacuation],
+      ]);
 
-    addSection("Additional Information", [
-      ["Passport Number", data.passportNumber],
-      ["Address", data.address],
-      ["City", data.city],
-      ["ZIP Code", data.zipCode],
-      ["Traveling with Pets", data.travelingWithPets],
-      ["Pre-existing Conditions", data.medicalConditions],
-      ["Special Requirements", data.specialRequirements],
-    ]);
+      addSection("Additional Information", [
+        ["Passport Number", data.passportNumber],
+        ["Address", data.address],
+        ["City", data.city],
+        ["ZIP Code", data.zipCode],
+        ["Traveling with Pets", data.travelingWithPets],
+        ["Pre-existing Conditions", data.medicalConditions],
+        ["Special Requirements", data.specialRequirements],
+      ]);
 
-    doc.save("travel_form_details.pdf");
+      doc.save("travel_form_details.pdf");
+
+      toast.success("Your PDF has been downloaded!", { icon: "📄" });
+    } catch (error) {
+      console.error("PDF download error:", error);
+      toast.error("Failed to download PDF. Please try again!", { icon: "⚠️" });
+    }
   };
 
   return (

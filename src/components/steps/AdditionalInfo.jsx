@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaGreaterThan, FaLessThan } from "react-icons/fa6";
 import { IoCalendarOutline } from "react-icons/io5";
+import { toast } from "react-toastify";
 
 export default function AdditionalInfo({ data, setData, onBack, onSubmit }) {
   const [errors, setErrors] = useState({});
@@ -26,7 +27,10 @@ export default function AdditionalInfo({ data, setData, onBack, onSubmit }) {
 
   const handleSubmit = () => {
     if (validate()) {
+      toast.success("Form submitted successfully!");
       onSubmit();
+    } else {
+      toast.error("Please fill all required fields!");
     }
   };
 
