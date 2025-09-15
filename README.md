@@ -1,4 +1,4 @@
-# Multi-Stepper Form Recat js Website with Tailwind CSS 
+# Multi-Stepper Form React js Website with Tailwind CSS 
 
 This is a modern and fully responsive Multi-Stepper Form website built using **React.js**, **Tailwind CSS**. It includes a responsive layout, custom styling with Tailwind utility classes.
 
